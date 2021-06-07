@@ -1,0 +1,30 @@
+<div class="mycontent">
+<h1>
+    <%= @category&.name || "All" %> posts
+</h1>
+
+<% if @category %>
+<%= link_to "All posts", posts_path%>
+<% end %>
+<%= form_with  method: :get do |form| %>
+  <%= form.label :query, "Search for:" %>
+  <%= form.text_field :query,value: params[:query]%>
+  <%= form.submit "Search" %>
+<% end %>
+<%= link_to "Create new post", new_post_path %>
+<div class="posts-container">
+  <% @posts.each do |post| %>
+    <div class="post">
+
+      <%= link_to post do %>
+        <h3> <%= post.title %> </h3>
+      <% end %>
+      <!--<p> <%= post.category.name %> </p>-->
+      <%= link_to post.category.name, category_posts_path(post.category) %>
+      <%# <%= link_to post.category.name, category_posts_path(category_handle: post.category_handle) %>
+      <p> <%= post.created_at %> </p>
+      <p> <%= post.text %> </p>
+    </div>
+  <% end %>
+</div>
+</div>
